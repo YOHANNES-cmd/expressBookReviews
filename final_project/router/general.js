@@ -47,6 +47,20 @@ public_users.get('/isbn/:isbn', async (req, res) => {
         res.status(404).json({ message: err });
     }
 });
+// Task 12: Get book details by author (async-await)
+public_users.get('/author/:author', async (req, res) => {
+    const author = req.params.author.toLowerCase();
+    try {
+        const booksByAuthor = await new Promise((resolve, reject) => {
+            const filtered = Object.values(books).filter(book => book.author.toLowerCase() === author);
+            if (filtered.length > 0) resolve(filtered);
+            else reject(`No books found for author ${author}`);
+        });
+        res.status(200).send(JSON.stringify(booksByAuthor, null, 4));
+    } catch (err) {
+        res.status(404).json({ message: err });
+    }
+});
 
 
 // Get book review based on ISBN (remains synchronous)
