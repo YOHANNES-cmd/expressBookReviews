@@ -18,6 +18,7 @@ app.use("/customer/auth/*", function auth(req, res, next) {
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
         return res.status(401).json({ message: "User not logged in" });
     }
+    
 
     const token = authHeader.split(" ")[1];
 
